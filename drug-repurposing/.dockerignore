@@ -1,0 +1,5 @@
+.venv
+web/node_modules
+web/dist
+infra/terraform/.terraform
+__pycache__

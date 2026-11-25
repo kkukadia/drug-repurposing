@@ -1,0 +1,14 @@
+id	name	kind
+Compound::DB00316	Acetaminophen	Compound
+Compound::DB00945	Aspirin	Compound
+Compound::DB01050	Ibuprofen	Compound
+Compound::DB09999	Mysterydrug	Compound
+Disease::DOID:1612	breast cancer	Disease
+Disease::DOID:9351	diabetes mellitus	Disease
+Gene::351	APP	Gene
+Gene::7157	TP53	Gene
+Gene::5743	PTGS2	Gene
+Gene::5742	PTGS1	Gene
+Anatomy::UBERON:0000004	nose	Anatomy
+Side Effect::C0018681	Headache	Side Effect
+Pharmacologic Class::N0000175722	NSAID	Pharmacologic Class

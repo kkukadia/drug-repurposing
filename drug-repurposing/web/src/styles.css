@@ -1,0 +1,23 @@
+:root { font-family: system-ui, sans-serif; color: #1a1a1a; background: #fafafa; }
+body { margin: 0; }
+.banner { position: sticky; top: 0; z-index: 10; background: #7a1f1f; color: #fff; padding: 0.6rem 1rem; }
+main { max-width: 64rem; margin: 0 auto; padding: 1rem; }
+.search input { display: block; width: 100%; padding: 0.5rem; font-size: 1rem; box-sizing: border-box; }
+.results { list-style: none; padding: 0; }
+.results button { width: 100%; text-align: left; padding: 0.4rem; cursor: pointer; }
+.muted { color: #666; font-size: 0.85em; }
+.status { color: #333; }
+.error { color: #a00; }
+table.candidates { width: 100%; border-collapse: collapse; }
+.candidates th, .candidates td { border-bottom: 1px solid #ddd; padding: 0.4rem; text-align: left; vertical-align: top; }
+.breakdown { list-style: none; margin: 0; padding: 0; }
+.breakdown li { display: flex; gap: 0.5rem; align-items: center; }
+.breakdown .method { width: 6rem; }
+.breakdown .bar { width: 6rem; height: 0.5rem; background: #e3e3e3; display: inline-block; }
+.breakdown .bar span { display: block; height: 100%; background: #2a6ebb; }
+.paths { padding-left: 1.2rem; }
+.node { background: #eef; padding: 0 0.3rem; border-radius: 3px; }
+.kind-gene { background: #efe; }
+.kind-disease { background: #fee; }
+.edge { color: #555; font-size: 0.85em; }
+.detail td { background: #f3f3f3; }

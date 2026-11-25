@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<PubmedArticleSet>
+<PubmedArticle><MedlineCitation><PMID>111</PMID><Article><Journal><JournalIssue><PubDate><Year>2015</Year></PubDate></JournalIssue></Journal><ArticleTitle>Aspirin and cancer</ArticleTitle><Abstract><AbstractText Label="BACKGROUND">Aspirin may help.</AbstractText><AbstractText>It works.</AbstractText></Abstract></Article></MedlineCitation></PubmedArticle>
+<PubmedArticle><MedlineCitation><PMID>222</PMID><Article><Journal><JournalIssue><PubDate><MedlineDate>2010 Jan-Feb</MedlineDate></PubDate></JournalIssue></Journal><ArticleTitle>No abstract</ArticleTitle></Article></MedlineCitation></PubmedArticle>
+</PubmedArticleSet>
