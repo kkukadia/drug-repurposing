@@ -21,3 +21,24 @@ table.candidates { width: 100%; border-collapse: collapse; }
 .kind-disease { background: #fee; }
 .edge { color: #555; font-size: 0.85em; }
 .detail td { background: #f3f3f3; }
+.graph-view { margin: 1rem 0; }
+.graph-view svg { width: 100%; height: auto; background: #fff; border: 1px solid #ddd; }
+.link { stroke: #999; }
+.link-predicted { stroke: #2a6ebb; }
+.link-known { stroke: #2e8b57; }
+.link-evidence { stroke: #b0b0b0; }
+.gnode text { font-size: 12px; fill: #222; pointer-events: none; paint-order: stroke; stroke: #fff; stroke-width: 3px; }
+.gnode.role-disease text { font-weight: 600; }
+.gnode.role-disease circle { fill: #d9534f; }
+.gnode.role-predicted circle { fill: #2a6ebb; }
+.gnode.role-known circle { fill: #2e8b57; }
+.gnode.role-gene circle { fill: #e8c547; stroke: #8a7a1f; }
+.gnode[role="button"] { cursor: pointer; }
+.gnode[role="button"]:hover circle, .gnode[role="button"]:focus circle, .gnode.selected circle { stroke: #000; stroke-width: 3; }
+.gnode[role="button"]:focus { outline: none; }
+.legend { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; padding: 0; margin: 0.5rem 0; font-size: 0.85em; }
+.legend li::before { content: ""; display: inline-block; width: 0.8em; height: 0.8em; border-radius: 50%; margin-right: 0.4em; vertical-align: middle; }
+.legend-predicted::before { background: #2a6ebb; }
+.legend-known::before { background: #2e8b57; }
+.legend-gene::before { background: #e8c547; }
+.legend-disease::before { background: #d9534f; }

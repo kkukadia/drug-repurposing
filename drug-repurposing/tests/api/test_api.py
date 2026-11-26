@@ -125,3 +125,16 @@ def test_missing_artifacts_degrade(tmp_path: Path):
         r = c.get("/diseases/MONDO:1/candidates")
         assert r.status_code == 503
         assert "disclaimer" in r.json()
+
+
+def test_graph_endpoint_memory(offline_client):
+    r = offline_client.get("/diseases/MONDO:1/graph?k=2")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["disease"]["disease_id"] == "MONDO:1"
+    assert body["links"]
+    assert body["disclaimer"]
+
+
+def test_health_reports_backend(offline_client):
+    assert offline_client.get("/health").json()["backend"] == "memory"

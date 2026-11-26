@@ -1,7 +1,8 @@
 FROM python:3.11-slim
 WORKDIR /app
-RUN pip install --no-cache-dir fastapi "uvicorn[standard]" pandas pyarrow httpx pydantic
+RUN pip install --no-cache-dir fastapi "uvicorn[standard]" pandas pyarrow httpx pydantic neo4j
 COPY api ./api
+COPY graph/__init__.py graph/neo4j_load.py ./graph/
 ENV DR_DATA_DIR=/data
 EXPOSE 8000
 CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -6,7 +6,30 @@ Predictions are computational hypotheses for researchers, not medical advice.
 
 ## Run it
 
-The graph and candidates are committed, so there's nothing to build first.
+With Neo4j and the web app, in Docker:
+
+```
+cd drug-repurposing/infra
+cp .env.example .env
+```
+
+Set `NEO4J_PASSWORD` in `.env`, then:
+
+```
+docker compose up -d --build
+docker compose --profile load run --rm loader
+```
+
+The loader writes the graph (47,031 nodes, 2,476,659 edges) and the 6,850 predictions into Neo4j in about 40 seconds. Open http://127.0.0.1:8080, search a disease, and you get a graph of the disease, its top predicted drugs, known treatments, and the genes that connect them. Click a drug for its score.
+
+Neo4j Browser is at http://127.0.0.1:7474. Predictions are `PREDICTED_TREATS` relationships:
+
+```
+MATCH (c:Compound)-[r:PREDICTED_TREATS]->(d:Disease {name: "type 2 diabetes mellitus"})
+RETURN c, r, d ORDER BY r.score DESC LIMIT 10
+```
+
+Without Neo4j, the API falls back to loading the parquet files in memory:
 
 ```
 cd drug-repurposing
@@ -15,14 +38,17 @@ python3.11 -m venv .venv
 make serve
 ```
 
+To point the API at a Neo4j you run yourself, set `DR_NEO4J_URI`, `DR_NEO4J_USER` and `DR_NEO4J_PASSWORD`, run `make neo4j-load`, then `make serve`.
+
 ```
 curl "http://127.0.0.1:8000/diseases?q=diabetes"
 curl "http://127.0.0.1:8000/diseases/DOID:9352/candidates?k=5"
+curl "http://127.0.0.1:8000/diseases/DOID:9352/graph?k=8"
 ```
 
-Set `DR_OFFLINE=1` to skip the live trial and paper lookups. For the web app, run `npm ci && npm run dev` in `web/`. For both services in Docker, run `docker compose up --build` in `infra/`.
+`DR_OFFLINE=1` skips the live trial and paper lookups. For the web dev server, run `npm ci && npm run dev` in `web/`.
 
-To rebuild from raw data (about 1.4 GB of downloads): `make graph`, `make benchmark`, `make train`. Tests: `make test`, `make lint`, `make lint-ml`.
+To rebuild from raw data (about 1.4 GB of downloads): `make graph`, `make benchmark`, `make train`, then reload Neo4j. Tests: `make test` (the Neo4j tests start a throwaway container and skip if Docker isn't running), `make lint`, `make lint-ml`.
 
 ## Layout
 
@@ -30,7 +56,8 @@ All under `drug-repurposing/`:
 
 - `ingest/`, `graph/`: download sources and build the graph (47,031 nodes, 2,476,659 edges, 755 labelled indications)
 - `models/`, `eval/`: proximity, signature reversal, TransE, ComplEx, GNN, ensemble, and the benchmark
-- `api/`, `web/`: backend and frontend
+- `graph/neo4j_load.py`: loads the graph and predictions into Neo4j
+- `api/`, `web/`: backend (Neo4j or in-memory) and frontend
 - `infra/`: Dockerfiles, Compose, Terraform
 - `docs/`: data dictionary, ADRs, full benchmark report
 

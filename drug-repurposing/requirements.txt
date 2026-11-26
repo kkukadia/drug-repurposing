@@ -41,6 +41,7 @@ multidict==7.2.1
 mypy==2.4.1
 mypy-extensions==1.2.0
 narwhals==2.29.0
+neo4j==6.4.1
 networkx==3.6.1
 numpy==2.4.6
 opentelemetry-api==1.45.2
@@ -63,6 +64,7 @@ pytest==9.2.0
 python-dateutil==4.0.0
 python-dotenv==1.2.4
 pytokens==0.4.1
+pytz==2026.6
 pyyaml==6.0.4
 requests==2.34.2
 ruff==0.17.6

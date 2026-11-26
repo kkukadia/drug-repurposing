@@ -14,6 +14,7 @@ class DiseaseOut(BaseModel):
 class PathNode(BaseModel):
     kind: str
     name: str
+    id: str | None = None
 
 
 class PathOut(BaseModel):
@@ -58,4 +59,27 @@ class HealthOut(BaseModel):
     graph_loaded: bool
     candidates_loaded: bool
     n_diseases: int
+    backend: str = "memory"
     disclaimer: str = DISCLAIMER
+
+
+class GraphNode(BaseModel):
+    id: str
+    kind: str
+    name: str
+    role: str
+
+
+class GraphLink(BaseModel):
+    source: str
+    target: str
+    kind: str
+    label: str
+    score: float | None = None
+
+
+class GraphViewOut(BaseModel):
+    disease: DiseaseOut
+    disclaimer: str = DISCLAIMER
+    nodes: list[GraphNode]
+    links: list[GraphLink]

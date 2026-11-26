@@ -14,6 +14,9 @@ class Settings:
     http_timeout: float
     max_paths: int
     max_path_search_nodes: int
+    neo4j_uri: str | None = None
+    neo4j_user: str = "neo4j"
+    neo4j_password: str | None = None
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -28,4 +31,7 @@ class Settings:
             http_timeout=float(os.environ.get("DR_HTTP_TIMEOUT", "6")),
             max_paths=int(os.environ.get("DR_MAX_PATHS", "3")),
             max_path_search_nodes=int(os.environ.get("DR_MAX_PATH_NODES", "5000")),
+            neo4j_uri=os.environ.get("DR_NEO4J_URI") or None,
+            neo4j_user=os.environ.get("DR_NEO4J_USER", "neo4j"),
+            neo4j_password=os.environ.get("DR_NEO4J_PASSWORD") or None,
         )
