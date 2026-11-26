@@ -1,4 +1,4 @@
-import type { CandidatesResponse, Disease } from "./types";
+import type { CandidatesResponse, Disease, GraphViewResponse } from "./types";
 
 const BASE: string = import.meta.env.VITE_API_URL ?? "/api";
 
@@ -28,6 +28,17 @@ export function fetchCandidates(
 ): Promise<CandidatesResponse> {
   return getJson<CandidatesResponse>(
     `/diseases/${encodeURIComponent(diseaseId)}/candidates?k=${k}`,
+    signal,
+  );
+}
+
+export function fetchGraph(
+  diseaseId: string,
+  k = 8,
+  signal?: AbortSignal,
+): Promise<GraphViewResponse> {
+  return getJson<GraphViewResponse>(
+    `/diseases/${encodeURIComponent(diseaseId)}/graph?k=${k}`,
     signal,
   );
 }

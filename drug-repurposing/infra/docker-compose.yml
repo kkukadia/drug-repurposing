@@ -1,12 +1,47 @@
 services:
+  neo4j:
+    image: neo4j:5-community
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:?set NEO4J_PASSWORD in infra/.env}
+      NEO4J_server_memory_heap_max__size: 2G
+      NEO4J_server_memory_pagecache_size: 1G
+    volumes:
+      - neo4j-data:/data
+    ports:
+      - "127.0.0.1:7474:7474"
+      - "127.0.0.1:7687:7687"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+  loader:
+    profiles: ["load"]
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.api
+    command: ["python", "-m", "graph.neo4j_load", "--graph", "/data/graph", "--candidates", "/data/results/candidates.parquet"]
+    environment:
+      DR_NEO4J_URI: bolt://neo4j:7687
+      DR_NEO4J_PASSWORD: ${NEO4J_PASSWORD:?set NEO4J_PASSWORD in infra/.env}
+    volumes:
+      - ../data:/data
+    depends_on:
+      neo4j:
+        condition: service_healthy
   api:
     build:
       context: ..
       dockerfile: infra/Dockerfile.api
     environment:
       DR_DATA_DIR: /data
+      DR_NEO4J_URI: bolt://neo4j:7687
+      DR_NEO4J_PASSWORD: ${NEO4J_PASSWORD:?set NEO4J_PASSWORD in infra/.env}
     volumes:
       - ../data:/data
+    depends_on:
+      neo4j:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 15s
@@ -22,3 +57,6 @@ services:
       - api
     ports:
       - "8080:80"
+
+volumes:
+  neo4j-data:

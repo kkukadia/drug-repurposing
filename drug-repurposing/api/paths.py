@@ -35,7 +35,10 @@ class GraphIndex:
 
     def to_path(self, nodes: list[int], etypes: list[str]) -> PathOut:
         return PathOut(
-            nodes=[PathNode(kind=self.kind(n), name=self.names.get(n, str(n))) for n in nodes],
+            nodes=[
+                PathNode(kind=self.kind(n), name=self.names.get(n, str(n)), id=self.ext_ids.get(n))
+                for n in nodes
+            ],
             edges=etypes,
         )
 

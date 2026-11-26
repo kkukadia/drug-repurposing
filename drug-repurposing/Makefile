@@ -1,5 +1,5 @@
 
-.PHONY: serve test lint graph ingest
+.PHONY: serve test lint graph ingest neo4j-up neo4j-load
 
 serve:
 	.venv/bin/uvicorn api.main:app --host 127.0.0.1 --port 8000
@@ -9,9 +9,9 @@ test:
 	cd web && npm test
 
 lint:
-	.venv/bin/black --check api tests/api ingest graph tests/ingest tests/graph
-	.venv/bin/ruff check api tests/api ingest graph tests/ingest tests/graph
-	.venv/bin/mypy api tests/api ingest graph tests/ingest tests/graph
+	.venv/bin/black --check api tests/api ingest graph tests/ingest tests/graph tests/neo4j
+	.venv/bin/ruff check api tests/api ingest graph tests/ingest tests/graph tests/neo4j
+	.venv/bin/mypy api tests/api ingest graph tests/ingest tests/graph tests/neo4j
 	cd web && npm run lint
 
 ingest:
@@ -35,3 +35,9 @@ lint-ml:
 	.venv/bin/black --check eval models tests/workstream_b
 	.venv/bin/ruff check eval models tests/workstream_b
 	.venv/bin/mypy eval models tests/workstream_b
+
+neo4j-up:
+	cd infra && docker compose up -d --wait neo4j
+
+neo4j-load:
+	.venv/bin/python -m graph.neo4j_load --graph data/graph --candidates data/results/candidates.parquet

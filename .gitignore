@@ -20,3 +20,4 @@ drug-repurposing/data/cache/
 drug-repurposing/data/results/parts/
 BUILD_TIME.csv
 .caffeinate.pid
+!.env.example

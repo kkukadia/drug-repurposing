@@ -6,6 +6,7 @@ export interface Disease {
 export interface PathNode {
   kind: string;
   name: string;
+  id?: string | null;
 }
 
 export interface GraphPath {
@@ -43,4 +44,28 @@ export interface CandidatesResponse {
   disclaimer: string;
   evidence_live: boolean;
   candidates: Candidate[];
+}
+
+export type NodeRole = "disease" | "predicted" | "known" | "gene";
+
+export interface GraphNode {
+  id: string;
+  kind: string;
+  name: string;
+  role: NodeRole;
+}
+
+export interface GraphLink {
+  source: string;
+  target: string;
+  kind: "predicted" | "known" | "evidence";
+  label: string;
+  score?: number | null;
+}
+
+export interface GraphViewResponse {
+  disease: Disease;
+  disclaimer: string;
+  nodes: GraphNode[];
+  links: GraphLink[];
 }
